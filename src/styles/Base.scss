@@ -1,0 +1,12 @@
+@use './Navbar.scss';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+$background: #F4F6FF;
+
+body{
+  background-color: $background;
+}
