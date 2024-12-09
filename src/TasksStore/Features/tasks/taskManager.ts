@@ -19,12 +19,18 @@ interface TaskSlice {
   completedAmount:number;
 }
 
-const initialState: TaskSlice = localStorage.getItem("reduxState") ? JSON.parse(localStorage.getItem('reduxState') || '').tasks : {
+const getFromLocalStorage = (key: string) => {
+  if (!key || typeof window === 'undefined') {
+      return ""
+  }
+  return localStorage.getItem(key)
+}
+
+const initialState: TaskSlice = getFromLocalStorage("reduxState") ? JSON.parse(getFromLocalStorage('reduxState') || '').tasks : {
   list: {},
   tasksAmount: tasksAmount,
   completedAmount: 0
 };
-console.log(initialState)
 
 function createID() {
   const date = new Date();
