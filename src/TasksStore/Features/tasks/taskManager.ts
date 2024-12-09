@@ -1,6 +1,6 @@
 "use client";
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 let tasksAmount: number = 0
 
@@ -19,11 +19,12 @@ interface TaskSlice {
   completedAmount:number;
 }
 
-const initialState: TaskSlice = {
+const initialState: TaskSlice = localStorage.getItem("reduxState") ? JSON.parse(localStorage.getItem('reduxState') || '').tasks : {
   list: {},
   tasksAmount: tasksAmount,
   completedAmount: 0
 };
+console.log(initialState)
 
 function createID() {
   const date = new Date();
@@ -56,7 +57,7 @@ export const taskSlice = createSlice({
       state.tasksAmount = tasksAmount
       return state
     },
-    setCompleted: (state,action: {payload:{id:number, status?: boolean}}) => {
+    setCompleted: (state,action: PayloadAction<{id:number, status?: boolean}>) => {
       const { id, status = true } = action.payload
       if (!id) return state
       if (state.list[id].isCompleted != status) {

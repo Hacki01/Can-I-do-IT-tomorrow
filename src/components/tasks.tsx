@@ -18,7 +18,7 @@ export default function TasksList() {
       Completed tasks ({tasks.completedAmount}/{tasks.tasksAmount}):
       </div>
       <div onClick={() => {setCompletedVisibility(!areCompletedVisible)}} className="px-2 rounded-lg hover:bg-slate-200 select-none opacity-60">{areCompletedVisible ? 'Hide' : 'Show'}</div> 
-    </div> 
+    </div>
   : null}
   {areCompletedVisible ? list.map(task => {
     if (!task.isCompleted) return
