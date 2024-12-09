@@ -56,7 +56,7 @@ export const taskSlice = createSlice({
       state.tasksAmount = tasksAmount
       return state
     },
-    setCompleted: (state,action) => {
+    setCompleted: (state,action: {payload:{id:number, status?: boolean}}) => {
       const { id, status = true } = action.payload
       if (!id) return state
       if (state.list[id].isCompleted != status) {
