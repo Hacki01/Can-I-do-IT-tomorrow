@@ -3,14 +3,16 @@ import type { Metadata } from "next";
 import {TasksProvider} from '../TasksStore/provider'
 
 import Daily from "@/components/daily";
+import Header from "@/components/header"
 
-import { Lato } from 'next/font/google'
-const lato = Lato({ subsets: ['latin'], weight: ["100","300","400","700","900"]})
+import { Lato, Outfit } from 'next/font/google'
+const lato = Lato({ variable:'--font-lato', subsets: ['latin'], weight: ["100","300","400","700","900"]})
+const outfit = Outfit({ subsets:['latin'], weight:['100','200','300','400','500','600','700','800','900']})
 
 import '../styles/Base.scss'
 
 export const metadata: Metadata = {
-  title: "Can I do IT tommorow?",
+  title: "Maybe Now?",
   description: "Simple personal tasks organizer",
 };
 
@@ -20,12 +22,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl" className={lato.className}>
+    <html lang="pl" className={`${outfit.className} ${lato.variable}`}>
       <body>
         <TasksProvider >
-          <header className="navbar">
-            <div className='text-3xl p-3'>Can <span className='text-orange-500 font-bold'>I</span> do <span className='text-blue-500 font-bold'>IT</span> tommorow?</div>
-          </header>
+          <Header />
           <Daily />
           {children}
         </TasksProvider>

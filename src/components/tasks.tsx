@@ -1,16 +1,20 @@
-interface Task {
-  id: number;
-  title: string;
-  more: string;
-}
-
-const tasks: Task[] = [
-  { id: 1, title: 'Task 1', more: 'Description 1' },
-  { id: 2, title: 'Task 2', more: 'Description 2' },
-]
+import type { RootState } from "../TasksStore/store";
+import { useSelector } from 'react-redux'
+import FadeIn from 'react-fade-in';
+import TaskTile from "./Task/taskTile"
 
 export default function TasksList() {
-  return <div className="flex flex-col">{tasks.map(e => {
-    return <div className="p-6 bg-slate-400" key={e.id}>{e.title} - {e.more}</div>
-  })}</div>
+  const tasks = useSelector((state: RootState) => state.tasks)
+  const list = Object.values(tasks.list)
+  return <FadeIn childClassName="w-full flex justify-center" className="flex flex-col w-[70%] items-center">
+  {list.map(task => {
+    if (task.isCompleted) return
+    return <TaskTile key={task.id} task={task}/>
+  })}
+  {tasks.completedAmount > 0 ? <div className="text-lg font-semibold">Completed tasks ({tasks.completedAmount}/{tasks.tasksAmount}):</div> : null}
+  {list.map(task => {
+    if (!task.isCompleted) return
+    return <TaskTile key={task.id} task={task}/>
+  })}
+  </FadeIn>
 }

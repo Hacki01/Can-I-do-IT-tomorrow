@@ -1,18 +1,10 @@
 'use client';
 
 import TasksList from "@/components/tasks"
-
-import type { RootState } from "../TasksStore/store";
-import { useSelector, useDispatch } from 'react-redux'
-import {increment,decrement,reset} from '../TasksStore/Features/counter/counterSlice'
-
+import Panel from "@/components/panel";
 export default function App() {
-  const count = useSelector((state: RootState) => state.counter.value)
-  const dispatch = useDispatch()
-  return <main>
-      <TasksList />
-      {count}<br/>
-      <button onClick={() => dispatch(increment())}>Increment</button><br/>
-      <button onClick={() => dispatch(decrement())}>Decrement</button><br/>
-    </main>
+  return <main className="flex">
+    <TasksList />
+    <Panel />
+  </main>
 }

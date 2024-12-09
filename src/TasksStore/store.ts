@@ -1,12 +1,16 @@
 'use client';
 
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from './Features/counter/counterSlice'
+import Tasks from './Features/tasks/taskManager'
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    tasks: Tasks,
   },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
