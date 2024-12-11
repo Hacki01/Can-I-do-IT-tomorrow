@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import {TasksProvider} from '../TasksStore/provider'
+import LocalStorageLoader from '../TasksStore/localstorageLoader' 
 
 import Daily from "@/components/daily";
 import Header from "@/components/header"
@@ -22,12 +23,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl" className={`${outfit.className} ${lato.variable}`}>
+    <html lang="pl" className={`${outfit.className} ${lato.variable}`} suppressHydrationWarning>
       <body>
         <TasksProvider >
           <Header />
           <Daily />
-          {children}
+          <LocalStorageLoader>
+            {children}
+          </LocalStorageLoader>
         </TasksProvider>
       </body>
     </html>

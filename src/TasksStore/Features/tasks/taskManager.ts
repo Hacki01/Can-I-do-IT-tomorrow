@@ -13,24 +13,18 @@ export interface Task {
   plannedDate: Date,
 } 
 
-interface TaskSlice {
+export interface TaskSlice {
   list: {[key:number]:Task};
   tasksAmount: number;
   completedAmount:number;
 }
 
-const getFromLocalStorage = (key: string) => {
-  if (!key || typeof window === 'undefined') {
-      return ""
-  }
-  return localStorage.getItem(key)
-}
-
-const initialState: TaskSlice = getFromLocalStorage("reduxState") ? JSON.parse(getFromLocalStorage('reduxState') || '').tasks : {
+const initialState: TaskSlice = {
   list: {},
-  tasksAmount: tasksAmount,
+  tasksAmount: 0,
   completedAmount: 0
 };
+
 
 function createID() {
   const date = new Date();
@@ -46,6 +40,10 @@ export const taskSlice = createSlice({
   name: "Tasks",
   initialState,
   reducers: {
+    setTasks: (state,action: PayloadAction<TaskSlice>) => {
+      state = action.payload
+      return state
+    },
     addTask:  (state,action) => {
       const id = createID()
       const { title, desc } = action.payload
@@ -75,6 +73,6 @@ export const taskSlice = createSlice({
   },
 })
 
-export const { addTask, setCompleted } = taskSlice.actions;
+export const { addTask, setCompleted, setTasks } = taskSlice.actions;
 
 export default taskSlice.reducer;
