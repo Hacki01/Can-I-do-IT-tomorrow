@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import {TasksProvider} from '../TasksStore/provider'
 import LocalStorageLoader from '../TasksStore/localstorageLoader' 
 
-import Daily from "@/components/daily";
+import Daily from "@/components/header/daily";
 import Header from "@/components/header"
 
 import { Lato, Outfit } from 'next/font/google'

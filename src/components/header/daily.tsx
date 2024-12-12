@@ -2,9 +2,9 @@
 import { useRef } from "react"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import { faAngleLeft, faAngleRight, faCalendarDays } from '@fortawesome/free-solid-svg-icons'
 
-import type { RootState } from "../TasksStore/store";
+import type { RootState } from "../../TasksStore/store";
 import { useDispatch, useSelector } from "react-redux"
 import { setSelectedDate } from "@/TasksStore/Features/tasks/taskManager";
 
@@ -18,6 +18,15 @@ function DateToString(date: Date) {
   return [date.getDate(),date.getMonth()+1].join('.');
 }
 
+function Button({children, onClick}: Readonly<{
+  children: React.ReactNode;
+  onClick?: () => void;
+}>) {
+  return <button className="text-2xl p-2 rounded-lg bg-elementBg aspect-square h-[48px]" 
+    onClick={onClick}>{children}
+  </button> 
+}
+
 export default function Daily() {
   const todayDate = useRef(new Date())
   const selectedDate = useSelector((state: RootState) => state.tasks).selectedDate
@@ -28,14 +37,14 @@ export default function Daily() {
 
   function changeSelected(incrementation: number) {
     const newSelectedDate =  addDays(selectedDate, incrementation)
-    dispatch(setSelectedDate(newSelectedDate))
+    dispatch(setSelectedDate({date: newSelectedDate}))
   }
 
   function IncrementButton(props: {value:number}) {
     const { value } = props;
-    return <button className="text-2xl p-2 rounded-lg bg-elementBg aspect-square h-[48px]" 
-      onClick={() => {changeSelected(value)}}>{value > 0 ? <FontAwesomeIcon icon={faAngleRight} /> : <FontAwesomeIcon icon={faAngleLeft}/>}
-    </button> 
+    return <Button onClick={() => {changeSelected(value)}}>
+      {value > 0 ? <FontAwesomeIcon icon={faAngleRight} /> : <FontAwesomeIcon icon={faAngleLeft}/>}
+    </Button> 
   }
 
 
@@ -44,8 +53,11 @@ export default function Daily() {
   return <div className='flex justify-center gap-3 w-full items-center py-6'>
     <IncrementButton value={-1}/>
     <div className="text-2xl py-2 w-[200px] flex justify-center rounded-lg bg-elementBg">
-      {today == selected ? 'Today is ' : 'Tasks for '}{selected}
+      Tasks for {today == selected ? 'Today' : selected}
     </div>
     <IncrementButton value={1}/>
+    <Button>
+      <FontAwesomeIcon icon={faCalendarDays} />
+    </Button>
   </div>
 }

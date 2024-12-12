@@ -12,8 +12,8 @@ export default function Panel() {
     updateDesc(e.target.value)
   }
   function handleAdd() {
-    if (title.length < 5) {
-      alert('Title must be at least 5 characters long')
+    if (title.length < 3) {
+      alert('Title must be at least 3 characters long')
       return;
     }
     dispatch(addTask({title,desc}))

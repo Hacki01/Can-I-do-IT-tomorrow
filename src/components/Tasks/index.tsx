@@ -1,7 +1,7 @@
-import type { RootState } from "../TasksStore/store";
+import type { RootState } from "../../TasksStore/store";
 import { useSelector } from 'react-redux';
 import FadeIn from 'react-fade-in';
-import TaskTile from "./Task/taskTile";
+import TaskTile from "./taskTile";
 import { useState } from "react";
 
 function DateToString(date: Date) {

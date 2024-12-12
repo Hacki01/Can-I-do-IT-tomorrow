@@ -1,9 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faCaretDown, faCaretRight, faExclamation } from '@fortawesome/free-solid-svg-icons'
 import type { Task } from "@/TasksStore/Features/tasks/taskManager";
-import { setCompleted, setHighPriority } from "@/TasksStore/Features/tasks/taskManager"
+import { removeTask, setCompleted, setHighPriority, updatePlannedDate } from "@/TasksStore/Features/tasks/taskManager"
 import { useDispatch } from 'react-redux'
 import { useState, useRef, useEffect } from 'react';
+
+function addDays(date: Date, days: number) {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
 
 function CompletedTask(props:{task:Task}) {
   const task = props.task
@@ -106,12 +112,18 @@ function UncompletedTask(props:{task:Task}) {
       {isExpanded ? (
           <div 
             ref={optionsMenu}
-            className="relative select-none p-4 bg-gray-300 hover:bg-gray-400 rounded-2xl aspect-square h-[50px] lg:h-[65px] flex justify-center items-center text-3xl"
+            className="relative z-50 select-none p-4 bg-gray-300 hover:bg-gray-400 rounded-2xl aspect-square h-[50px] lg:h-[65px] flex justify-center items-center text-3xl"
           >
             <div className='absolute top-0 left-0 p-4 w-auto bg-gray-400 rounded-2xl'>
               <FontAwesomeIcon icon={faCaretDown} onClick={() => {setExpanded(false)}}/>
               <div className='flex flex-col gap-1 text-lg text-nowrap'>
                 {/* List of options */}
+                <button 
+                  onClick={() => {dispatch(updatePlannedDate({id: task.id, date: addDays(task.plannedDate,1)}))}} 
+                  className='p-1 rounded-md cursor-pointer hover:bg-gray-300'
+                >
+                  Move to the next day
+                </button>
                 {task.isHighPriority ? 
                   <button 
                     onClick={() => {dispatch(setHighPriority({id: task.id, status:false}))}} 
@@ -127,6 +139,12 @@ function UncompletedTask(props:{task:Task}) {
                     Set as High Priority
                   </button>
                 }
+                <button 
+                  onClick={() => {dispatch(removeTask({id: task.id}))}} 
+                  className='p-1 rounded-md cursor-pointer bg-red-500 hover:bg-red-600'
+                >
+                  Remove
+                </button>
               </div>
             </div>
           </div>

@@ -20,7 +20,7 @@ export default function LocalStorageLoader ({children}: Readonly<{
     if (typeof window !== "undefined") {
       const localStorageData = localStorage.getItem("reduxState");
       if (localStorageData) {
-        dispatch(setTasks(JSON.parse(localStorageData,dateTimeReviver).tasks as TasksSlice));
+        dispatch(setTasks({tasks: JSON.parse(localStorageData,dateTimeReviver).tasks as TasksSlice}));
       }
     }
   }, [dispatch]);
