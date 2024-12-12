@@ -6,7 +6,15 @@
 
 
 $background: #ffffff;
+$textGray: rgba(99, 101, 112, 0.565);
 
 body{
   background: $background;
+}
+
+:root{
+  --font-lato: 'Lato', sans-serif;
+  --background: #{$background};
+  --textGray: #{$textGray};
+  --elementBg: #f5f6fa;
 }
