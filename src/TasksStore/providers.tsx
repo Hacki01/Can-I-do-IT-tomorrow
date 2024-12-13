@@ -1,5 +1,8 @@
 'use client'
 
+import { Provider } from "react-redux";
+import {NextUIProvider} from '@nextui-org/react'
+import { store } from "./store";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";;
 import { setTasks } from "./Features/tasks/taskManager";
@@ -11,7 +14,8 @@ function dateTimeReviver(key: string, value:string) {
 
   return typeof value === 'string' && isoDateRegex.test(value) ? new Date(value) : value
 }
-export default function LocalStorageLoader ({children}: Readonly<{
+
+function LocalStorageLoadProvider ({children}: Readonly<{
   children: React.ReactNode;
 }>) {
   const dispatch = useDispatch();
@@ -24,6 +28,18 @@ export default function LocalStorageLoader ({children}: Readonly<{
       }
     }
   }, [dispatch]);
+  return children
+}
 
-  return children;
+export default function Providers ({children}: Readonly<{
+  children: React.ReactNode;
+}>) {
+
+  return <Provider store={store}>
+    <LocalStorageLoadProvider>
+      <NextUIProvider>
+        {children}
+      </NextUIProvider>
+    </LocalStorageLoadProvider>
+  </Provider>;
 };
