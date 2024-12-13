@@ -1,8 +1,11 @@
 "use client"
 import { useRef } from "react"
-
+import {DatePicker} from "@nextui-org/date-picker";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleLeft, faAngleRight, faCalendarDays } from '@fortawesome/free-solid-svg-icons'
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import {parseDate} from "@internationalized/date";
+import type { CalendarDate } from "@internationalized/date"
+
 
 import type { RootState } from "../../TasksStore/store";
 import { useDispatch, useSelector } from "react-redux"
@@ -12,19 +15,6 @@ function addDays(date: Date, days: number) {
   const result = new Date(date);
   result.setDate(result.getDate() + days);
   return result;
-}
-
-function DateToString(date: Date) {
-  return [date.getDate(),date.getMonth()+1].join('.');
-}
-
-function Button({children, onClick}: Readonly<{
-  children: React.ReactNode;
-  onClick?: () => void;
-}>) {
-  return <button className="text-2xl p-2 rounded-lg bg-elementBg aspect-square h-[48px]" 
-    onClick={onClick}>{children}
-  </button> 
 }
 
 export default function Daily() {
@@ -40,24 +30,25 @@ export default function Daily() {
     dispatch(setSelectedDate({date: newSelectedDate}))
   }
 
-  function IncrementButton(props: {value:number}) {
-    const { value } = props;
-    return <Button onClick={() => {changeSelected(value)}}>
-      {value > 0 ? <FontAwesomeIcon icon={faAngleRight} /> : <FontAwesomeIcon icon={faAngleLeft}/>}
-    </Button> 
+  function onPickerChange(value: CalendarDate | null) {
+    if (!value) return; 
+    const date = new Date(value.year,value.month-1,value.day)
+    dispatch(setSelectedDate({date}))
   }
 
+  function IncrementButton(props: {value:number}) {
+    const { value } = props;
+    return <button className="text-2xl p-2 rounded-lg aspect-square h-[48px]" onClick={() => {changeSelected(value)}}>
+      {value > 0 ? <FontAwesomeIcon icon={faAngleRight} /> : <FontAwesomeIcon icon={faAngleLeft}/>}
+    </button> 
+  }
 
-  const today = DateToString(todayDate.current)
-  const selected = DateToString(selectedDate)
+  const dateString = [selectedDate.getFullYear(),selectedDate.getMonth() + 1,selectedDate.getDate()].join('-').toString()
+  const valueDate = parseDate(dateString)
+
   return <div className='flex justify-center gap-3 w-full items-center py-6'>
     <IncrementButton value={-1}/>
-    <div className="text-2xl py-2 w-[200px] flex justify-center rounded-lg bg-elementBg">
-      Tasks for {today == selected ? 'Today' : selected}
-    </div>
+    <div className=""><DatePicker disableAnimation label="Tasks for" value={valueDate} onChange={onPickerChange}/></div>
     <IncrementButton value={1}/>
-    <Button>
-      <FontAwesomeIcon icon={faCalendarDays} />
-    </Button>
   </div>
 }
