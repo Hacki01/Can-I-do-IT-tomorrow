@@ -43,7 +43,7 @@ export default function Panel() {
       <Textarea label="Description" onChange={handleDescChange} value={desc} maxRows={3} variant='faded'/>
       <div className='flex gap-4'>
         <Button color="secondary" onPress={() => {handleAdd()}}>Add Tommorow</Button>
-        <div><DatePicker variant='faded' disableAnimation value={valueDate} onChange={onPickerChange}/></div>
+        <div><DatePicker aria-label='Task Date' variant='faded' disableAnimation value={valueDate} onChange={onPickerChange}/></div>
         <Button color="warning" onPress={() => {handleAdd(addTaskDate)}}>Add</Button>
       </div>
     </div>
