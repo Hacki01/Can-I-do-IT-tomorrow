@@ -1,5 +1,5 @@
 "use client"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import {DatePicker} from "@nextui-org/date-picker";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
@@ -18,9 +18,17 @@ function addDays(date: Date, days: number) {
 }
 
 export default function Daily() {
-  const todayDate = useRef(new Date())
+  const todayDate = useRef<Date>()
   const selectedDate = useSelector((state: RootState) => state.tasks).selectedDate
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    todayDate.current = new Date()
+    return () => {
+      todayDate.current = undefined;
+    }
+  })
+
   setInterval(() => {
     todayDate.current = new Date()
   }, 1000)
