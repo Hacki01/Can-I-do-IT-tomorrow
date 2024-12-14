@@ -1,6 +1,6 @@
 'use client';
 
-import TasksList from "@/components/Tasks"
+import TasksList from "@/components/tasks"
 import Panel from "@/components/panel";
 export default function App() {
   return <main className="flex">
