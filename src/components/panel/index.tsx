@@ -13,10 +13,11 @@ export default function Panel() {
   function handleDescChange(e: React.FormEvent<HTMLInputElement>) {
     updateDesc(e.currentTarget.value)
   }
-  function handleAdd() {
+  function handleAdd(plannedDate?: Date) {
+    if (!plannedDate) plannedDate = new Date(new Date().getTime() + 24*60*60*1000) // 24 hours later
     if (title.length < 3) return alert('Title must be at least 3 characters long')
     if (desc.length > 300) return alert('Description is too long')
-    dispatch(addTask({title,desc}))
+    dispatch(addTask({title,desc,plannedDate}))
     updateTitle('')
     updateDesc('')
   }
@@ -24,7 +25,8 @@ export default function Panel() {
     <div className="w-[90%] p-4 rounded-3xl bg-elementBg flex flex-col gap-3">
       <Input label="Title" onChange={handleTitleChange} isRequired value={title} placeholder="Enter task title" variant='faded'/>
       <Textarea label="Description" onChange={handleDescChange} maxRows={3} variant='faded'/>
-      <Button color="secondary" onPress={handleAdd}>Add Tommorow</Button>
+      <Button color="secondary" onPress={() => {handleAdd()}}>Add Tommorow</Button>
+      <Button color="secondary" onPress={() => {handleAdd(new Date())}}>Add Today</Button>
     </div>
   </div>
 }
