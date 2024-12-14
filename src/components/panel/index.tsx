@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { addTask } from "@/TasksStore/Features/tasks/taskManager";
 import {Input, Textarea} from "@nextui-org/input";
+import {Button} from "@nextui-org/button";
 import React, {  useState } from 'react';
 export default function Panel() {
   const dispatch = useDispatch()
@@ -20,10 +21,10 @@ export default function Panel() {
     updateDesc('')
   }
   return <div className="w-[30%] h-full flex justify-center">
-    <div className="w-[90%] p-4 rounded-3xl bg-elementBg flex flex-col items-center gap-3">
+    <div className="w-[90%] p-4 rounded-3xl bg-elementBg flex flex-col gap-3">
       <Input label="Title" onChange={handleTitleChange} isRequired value={title} placeholder="Enter task title" variant='faded'/>
       <Textarea label="Description" onChange={handleDescChange} maxRows={3} variant='faded'/>
-      <button className="p-2 bg-green-400 hover:bg-green-500 text-white text-xl font-light rounded-xl" onClick={handleAdd}>Add</button>
+      <Button color="secondary" onPress={handleAdd}>Add Tommorow</Button>
     </div>
   </div>
 }
