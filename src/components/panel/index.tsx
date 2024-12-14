@@ -5,20 +5,16 @@ import {DatePicker} from "@nextui-org/date-picker";
 import type { CalendarDate } from "@internationalized/date"
 import {parseDate} from "@internationalized/date";
 import {Button} from "@nextui-org/button";
-import React, { useEffect, useRef, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 export default function Panel() {
-  const addTaskDateRef = useRef<Date>()
-  const addTaskDate = addTaskDateRef.current
+  const [addTaskDate, setAddTaskDate] = useState<Date>() // 24 hours later
   const dispatch = useDispatch()
   const [title,updateTitle] = useState('')
   const [desc,updateDesc] = useState('')
 
   useEffect(() => {
-    addTaskDateRef.current = new Date(new Date().getTime() + 24*60*60*1000) // 24 hours later
-    return () => {
-      addTaskDateRef.current = undefined
-    }
-  })
+    setAddTaskDate(new Date(new Date().getTime() + 24*60*60*1000))
+  },[])
 
   if (!addTaskDate) return;
   const dateString = [addTaskDate.getFullYear(),addTaskDate.getMonth() + 1,addTaskDate.getDate()].join('-').toString()
@@ -43,7 +39,7 @@ export default function Panel() {
   function onPickerChange(value: CalendarDate | null) {
     if (!value) return; 
     const date = new Date(value.year,value.month-1,value.day)
-    addTaskDateRef.current = date
+    setAddTaskDate(date)
   }
 
   return <div className="w-[30%] h-full flex justify-center">
