@@ -4,6 +4,7 @@ import type { Task } from "@/TasksStore/Features/tasks/taskManager";
 import { removeTask, setCompleted, setHighPriority, updatePlannedDate } from "@/TasksStore/Features/tasks/taskManager"
 import { useDispatch } from 'react-redux'
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
+import {Tooltip} from "@nextui-org/tooltip";
 import { Key } from 'react';
 
 function addDays(date: Date, days: number) {
@@ -40,7 +41,7 @@ export default function UncompletedTask(props:{task:Task}) {
   return <div className={`mb-4 p-6 rounded-2xl bg-elementBg w-[95%] md:w-[80%] xl:w-[60%] flex items-center gap-4 border-2 ${task.isHighPriority ? 'border-danger ' : ' '}`}>
     {/* Priority Mark */}
     {task.isHighPriority 
-    ? <FontAwesomeIcon className='text-5xl text-danger' icon={faCircleExclamation} />
+    ? <FontAwesomeIcon className='text-4xl text-danger' icon={faCircleExclamation} />
     : null}
     <div className='flex justify-between w-full'>
       <div className='flex flex-col'>
@@ -49,9 +50,13 @@ export default function UncompletedTask(props:{task:Task}) {
       </div> 
       <div className='flex items-center gap-2'>
         <Dropdown>
-          <DropdownTrigger>
-            <Button variant="solid" size="lg" isIconOnly className='text-white text-2xl'><FontAwesomeIcon icon={faEllipsis} /></Button>
-          </DropdownTrigger>
+            <Tooltip content="More options">
+              <div>
+                <DropdownTrigger>
+                    <Button variant="solid" size="lg" isIconOnly className='text-white text-2xl'><FontAwesomeIcon icon={faEllipsis} /></Button>
+                </DropdownTrigger>
+              </div>
+            </Tooltip>
           <DropdownMenu onAction={(key) => doTaskAction(key)} aria-label="Static Actions">
             <DropdownItem key="changePriority"  startContent={<FontAwesomeIcon icon={faCircleExclamation}/>} className="text-warning">Set as {task.isHighPriority ? "Normal Priority" : "High Priority"}</DropdownItem>
             <DropdownItem key="updatePlannedDate" startContent={<FontAwesomeIcon icon={faCircleRight}/>}>Move to the next day</DropdownItem>
@@ -61,7 +66,9 @@ export default function UncompletedTask(props:{task:Task}) {
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
-        <Button size="lg" isIconOnly onPress={() => {doTaskAction("completeTask")}}  className='text-white text-2xl' aria-label='Set as Completed' color='success'><FontAwesomeIcon icon={faCheck} /></Button>
+        <Tooltip content="Set as completed!" color='success'>
+          <Button size="lg" isIconOnly onPress={() => {doTaskAction("completeTask")}}  className='text-white text-2xl' aria-label='Set as Completed' color='success'><FontAwesomeIcon icon={faCheck} /></Button>
+        </Tooltip>
       </div>
     </div>
   </div>
