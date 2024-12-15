@@ -20,6 +20,36 @@ const config: Config = {
     },
   },
   darkMode: "class",
-  plugins: [nextui()]
+  plugins: [nextui({
+    addCommonColors: true,
+    themes: {
+      light: {
+        colors: {
+          background: "#FFFFFF",
+          foreground: "#11181C",
+          primary: {
+            foreground: "#FFFFFF",
+            DEFAULT: "#005bc4",
+          },
+          secondary: {
+            foreground: "#FFFFFF",
+            DEFAULT: "#7828C8",
+          },
+          warning: {
+            foreground: "#FFFFFF",
+            DEFAULT: "#F5A524",
+          },
+          default: {
+            foreground: "#FFFFFF",
+            DEFAULT: "#A1A1AA",
+          },
+          success: {
+            foreground: "#FFFFFF",
+            DEFAULT: "#45D483",
+          },
+        },
+      },
+    }
+  })]
 };
 export default config;

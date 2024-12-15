@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faCaretDown, faCaretRight, faExclamation } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faEllipsis, faCircleExclamation, faTrash, faCircleRight } from '@fortawesome/free-solid-svg-icons'
 import type { Task } from "@/TasksStore/Features/tasks/taskManager";
 import { removeTask, setCompleted, setHighPriority, updatePlannedDate } from "@/TasksStore/Features/tasks/taskManager"
 import { useDispatch } from 'react-redux'
-import { useState, useRef, useEffect } from 'react';
-import { Button } from "@nextui-org/button";
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
+import { Key } from 'react';
 
 function addDays(date: Date, days: number) {
   const result = new Date(date);
@@ -15,88 +15,53 @@ function addDays(date: Date, days: number) {
 
 export default function UncompletedTask(props:{task:Task}) {
   const task = props.task
+  const id = task.id
   const dispatch = useDispatch()
-  const optionsMenu = useRef<HTMLDivElement>(null)
-  const [isExpanded, setExpanded] = useState(false)
-  
-  useEffect(() => {
-    /* Hide options menu when clicked outside */
-    const handleClickOutside = (e: MouseEvent) => {
-      if(isExpanded && !optionsMenu.current?.contains(e.target as Node)){
-        setExpanded(false)
-      }
-    }
 
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+  function doTaskAction(actionName: string | Key) {
+    switch (actionName) {
+      case "changePriority":
+        dispatch(setHighPriority({id, status: !task.isHighPriority }))
+        break;
+      case "deleteTask":
+        dispatch(removeTask({id}))
+        break;
+      case "completeTask":
+        dispatch(setCompleted({id, status:true}))
+        break;
+      case "updatePlannedDate":
+        dispatch(updatePlannedDate({id, date: addDays(task.plannedDate, 1)}))
+        break;
+      case "editTask":
+        //open edit form
     }
-  }, [isExpanded])
-  return <div className={`mb-4 p-6 rounded-2xl bg-elementBg w-[95%] md:w-[80%] xl:w-[60%] flex items-center gap-4 border-2 ${task.isHighPriority ? 'border-rose-600 ' : ' '}`}>
+  }
+
+  return <div className={`mb-4 p-6 rounded-2xl bg-elementBg w-[95%] md:w-[80%] xl:w-[60%] flex items-center gap-4 border-2 ${task.isHighPriority ? 'border-danger ' : ' '}`}>
     {/* Priority Mark */}
     {task.isHighPriority 
-    ? <div title='High Priority' className='relative select-none p-4  bg-rose-500 rounded-full aspect-square h-[50px] lg:h-[60px] flex justify-center items-center text-3xl text-white'>
-        <FontAwesomeIcon icon={faExclamation} />
-      </div>
+    ? <FontAwesomeIcon className='text-5xl text-danger' icon={faCircleExclamation} />
     : null}
     <div className='flex justify-between w-full'>
       <div className='flex flex-col'>
         <div className='text-2xl'>{task.title}</div>
         <div className='text-md'>{task.desc}</div>
       </div> 
-      <div className='flex gap-2 items-center'>
-        {/* Is More options visible */}
-      {isExpanded ? (
-          <div 
-            ref={optionsMenu}
-            className="relative z-50 select-none p-4 bg-gray-300 hover:bg-gray-400 rounded-2xl aspect-square h-[50px] lg:h-[65px] flex justify-center items-center text-3xl"
-          >
-            <div className='absolute top-0 left-0 p-4 w-auto bg-gray-400 rounded-2xl'>
-              <FontAwesomeIcon icon={faCaretDown} onClick={() => {setExpanded(false)}}/>
-              <div className='flex flex-col gap-1 text-lg text-nowrap'>
-                {/* List of options */}
-                <button 
-                  onClick={() => {dispatch(updatePlannedDate({id: task.id, date: addDays(task.plannedDate,1)}))}} 
-                  className='p-1 rounded-md cursor-pointer hover:bg-gray-300'
-                >
-                  Move to the next day
-                </button>
-                {task.isHighPriority ? 
-                  <button 
-                    onClick={() => {dispatch(setHighPriority({id: task.id, status:false}))}} 
-                    className='p-1 rounded-md cursor-pointer hover:bg-gray-300'
-                  >
-                    Set as Normal Priority
-                  </button> 
-                :
-                  <button 
-                    onClick={() => {dispatch(setHighPriority({id: task.id}))}} 
-                    className='p-1 rounded-md cursor-pointer hover:bg-gray-300'
-                  >
-                    Set as High Priority
-                  </button>
-                }
-                <button 
-                  onClick={() => {dispatch(removeTask({id: task.id}))}} 
-                  className='p-1 rounded-md cursor-pointer bg-red-500 hover:bg-red-600'
-                >
-                  Remove
-                </button>
-              </div>
-            </div>
-          </div>
-        ) : (
-          /* Show more options button */
-          <div 
-            title='More options'  
-            onClick={() => {setExpanded(true)}}
-            className="relative p-4 bg-gray-300 hover:bg-gray-400 rounded-2xl aspect-square h-[50px] lg:h-[65px] flex justify-center items-center text-3xl"
-          >
-            <FontAwesomeIcon icon={faCaretRight} />
-          </div>
-        )}
-        {/* Set as completed button */}
-        <Button isIconOnly onPress={() => {dispatch(setCompleted({id:task.id}))}}  className='text-white text-2xl scale-150' aria-label='Set as Completed' color='success'><FontAwesomeIcon icon={faCheck} /></Button>
+      <div className='flex items-center gap-2'>
+        <Dropdown>
+          <DropdownTrigger>
+            <Button variant="solid" size="lg" isIconOnly className='text-white text-2xl'><FontAwesomeIcon icon={faEllipsis} /></Button>
+          </DropdownTrigger>
+          <DropdownMenu onAction={(key) => doTaskAction(key)} aria-label="Static Actions">
+            <DropdownItem key="changePriority"  startContent={<FontAwesomeIcon icon={faCircleExclamation}/>} className="text-warning">Set as {task.isHighPriority ? "Normal Priority" : "High Priority"}</DropdownItem>
+            <DropdownItem key="updatePlannedDate" startContent={<FontAwesomeIcon icon={faCircleRight}/>}>Move to the next day</DropdownItem>
+            {/* <DropdownItem key="editTask" startContent={"!"}>Edit task</DropdownItem> */}
+            <DropdownItem key="deleteTask" startContent={<FontAwesomeIcon icon={faTrash}/>} className="text-danger" color="danger">
+              Delete task
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+        <Button size="lg" isIconOnly onPress={() => {doTaskAction("completeTask")}}  className='text-white text-2xl' aria-label='Set as Completed' color='success'><FontAwesomeIcon icon={faCheck} /></Button>
       </div>
     </div>
   </div>
