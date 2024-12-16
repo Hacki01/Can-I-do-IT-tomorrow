@@ -46,6 +46,9 @@ function LocalStorageLoadProvider ({children}: Readonly<{
         dispatch(moveExpiredTasks())
       }
     }
+    setInterval(() => {
+      dispatch(moveExpiredTasks())
+    },1000)
   }, [dispatch]);
   return children
 }
