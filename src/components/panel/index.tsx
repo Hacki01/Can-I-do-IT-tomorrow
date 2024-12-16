@@ -43,13 +43,18 @@ export default function Panel() {
   }
 
   return <div className="w-[30%] h-full flex justify-center">
-    <div className="w-[90%] p-4 rounded-3xl bg-elementBg flex flex-col gap-3">
-      <Input label="Title" onChange={handleTitleChange} isRequired value={title} placeholder="Enter task title" variant='faded'/>
-      <Textarea label="Description" onChange={handleDescChange} value={desc} maxRows={3} variant='faded'/>
-      <div className='flex gap-4'>
+    <div className="w-[90%] p-4 rounded-3xl bg-elementBg flex flex-col gap-10">
+      <div className='flex flex-col gap-2'>
+        <Input label="Title" onChange={handleTitleChange} isRequired value={title} placeholder="Enter task title" variant='faded'/>
+        <Textarea label="Description" onChange={handleDescChange} value={desc} maxRows={3} variant='faded'/>
+        {/* More options */}
+      </div>
+      <div className='flex justify-between'>
         <Button color="secondary" onPress={() => {handleAdd()}}>Add Tommorow</Button>
-        <div><DatePicker aria-label='Task Date' variant='faded' disableAnimation value={valueDate} onChange={onPickerChange}/></div>
-        <Button color="warning" onPress={() => {handleAdd(addTaskDate)}}>Add</Button>
+        <div className='flex gap-4'>
+          <DatePicker aria-label='Task Date' variant='faded' disableAnimation value={valueDate} onChange={onPickerChange}/>
+          <Button color="warning" onPress={() => {handleAdd(addTaskDate)}}>Add</Button>
+        </div>
       </div>
     </div>
   </div>
