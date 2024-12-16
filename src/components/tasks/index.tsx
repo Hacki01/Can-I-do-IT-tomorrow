@@ -14,6 +14,9 @@ export default function TasksList() {
   const selectedDate = tasks.selectedDate
   let list = Object.values(tasks.list);
   list = list.filter(task => DateToString(task.plannedDate) === DateToString(selectedDate))
+  list = list.sort((a,b) => {
+    return (a.isHighPriority === b.isHighPriority) ? 0 : a.isHighPriority ? -1 : 1;
+  })
 
   const uncompletedTasks = list.filter(task => !task.isCompleted);
   const completedTasks = list.filter(task => task.isCompleted);
