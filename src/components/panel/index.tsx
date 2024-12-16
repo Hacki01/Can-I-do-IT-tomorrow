@@ -17,7 +17,7 @@ export default function Panel() {
   },[])
 
   if (!addTaskDate) return;
-  const dateString = [addTaskDate.getFullYear(),addTaskDate.getMonth() + 1,addTaskDate.getDate()].join('-').toString()
+  const dateString = [addTaskDate.getFullYear(),(addTaskDate.getMonth() + 1).toString().padStart(2,"0"),(addTaskDate.getDate()).toString().padStart(2,"0")].join('-').toString()
   const valueDate = parseDate(dateString)
 
   function handleTitleChange(e: React.FormEvent<HTMLInputElement>) {
