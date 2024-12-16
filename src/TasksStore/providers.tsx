@@ -5,8 +5,16 @@ import {NextUIProvider} from '@nextui-org/react'
 import { store } from "./store";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";;
-import { setTasks } from "./Features/tasks/taskManager";
+import { addTask, moveExpiredTasks, setTasks } from "./Features/tasks/taskManager";
 import type { TasksSlice } from "./Features/tasks/taskManager";
+
+function addDays(date: Date, days: number) {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+const addTestTasks = false
 
 function dateTimeReviver(key: string, value:string) {
   // Matches strings like "2022-08-25T09:39:19.288Z"
@@ -25,6 +33,17 @@ function LocalStorageLoadProvider ({children}: Readonly<{
       const localStorageData = localStorage.getItem("reduxState");
       if (localStorageData) {
         dispatch(setTasks({tasks: JSON.parse(localStorageData,dateTimeReviver).tasks as TasksSlice}));
+        if (addTestTasks) {
+          for (let i = 1; i <= 6; i++) {
+            const j = Math.ceil(i / 2)
+            dispatch(addTask({
+              title: "Task "+ i,
+              desc: "Description for task "+i,
+              plannedDate: addDays(new Date(), j - 2),
+            }))
+          }
+        }
+        dispatch(moveExpiredTasks())
       }
     }
   }, [dispatch]);

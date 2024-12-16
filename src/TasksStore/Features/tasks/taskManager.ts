@@ -26,19 +26,11 @@ const initialState: TasksSlice = {
 };
 
 
-function createID(tasksForToday: number) {
-  const date = new Date();
-
-  const year = date.getFullYear().toString().slice(2)
-  const month = (date.getMonth() + 1).toString().padStart(2,'0')
-  const day = date.getDate().toString().padStart(2,'0')
-  
-  const id = parseInt(year+month+day+(tasksForToday + 1).toString().padStart(3,'0'))
-  return id
-}
-
-function DateToString(date: Date) {
-  return [date.getDate(),date.getMonth()+1].join('.');
+function createID() {
+  const date = new Date()
+  const dateTimestamp = Math.floor(date.getTime() + parseInt((Math.floor(Math.random() * 100)).toString().padStart(3,"0")));
+ /*  const id = parseInt(year+month+day+(tasksForPlannedDate + 1).toString().padStart(3,'0')) */
+  return dateTimestamp
 }
 
 function addDays(date: Date, days: number) {
@@ -47,10 +39,6 @@ function addDays(date: Date, days: number) {
   return result;
 }
 
-
-function getTasksForDate(state: TasksSlice, date:Date) {
-  return Object.values(state.list).filter(task => DateToString(task.plannedDate) === DateToString(date))
-}
 
 export const TasksSlice = createSlice({
   name: "Tasks",
@@ -63,12 +51,23 @@ export const TasksSlice = createSlice({
     setTasks: (state,action: PayloadAction<{tasks: TasksSlice}>) => {
       state = action.payload.tasks
       state.selectedDate = new Date()
+      console.log('Loaded tasks from LocalStorage')
       return state
+    },
+    moveExpiredTasks: (state) => {
+      const todayDate = new Date();
+      todayDate.setHours(0,0,0,0)
+      for (const id of Object.keys(state.list)) {
+        const task = state.list[parseInt(id)]
+        if (task.plannedDate < todayDate) {
+          task.isHighPriority = true;
+          task.plannedDate = new Date()
+        }
+      }
     },
     addTask:  (state,action: PayloadAction<{title: string, desc: string, plannedDate?: Date}>) => {
       const { title, desc, plannedDate = addDays(new Date(),1)} = action.payload
-      const tasksForToday = getTasksForDate(state, plannedDate).length
-      const id = createID(tasksForToday)
+      const id = createID()
       state.list[id] = {
         id,
         title: title || 'No Title Provided',
@@ -108,6 +107,6 @@ export const TasksSlice = createSlice({
   },
 })
 
-export const { addTask, removeTask, setCompleted, setTasks, setSelectedDate, setHighPriority, updatePlannedDate } = TasksSlice.actions;
+export const { addTask, moveExpiredTasks, removeTask, setCompleted, setTasks, setSelectedDate, setHighPriority, updatePlannedDate } = TasksSlice.actions;
 
 export default TasksSlice.reducer;

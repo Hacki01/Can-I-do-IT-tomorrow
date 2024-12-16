@@ -19,8 +19,11 @@ const outfit = Outfit({ subsets:['latin'], weight:['100','200','300','400','500'
 import '../styles/Base.scss'
 
 export const metadata: Metadata = {
-  title: "Maybe Now?",
-  description: "Simple personal tasks organizer",
+  title: "Maybe Now?", 
+  keywords: ["task planner", "daily planner", "to-do list", "tasks", "schedule"],
+  authors: [{name:"Szymon Matloch", url:"https://matloch.vercel.app"}],
+  publisher: "Szymon Matloch",
+  description: "Plan your daily duties with this curious tasks planner.",
 };
 
 export default function RootLayout({

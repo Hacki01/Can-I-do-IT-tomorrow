@@ -51,7 +51,7 @@ export default function Daily() {
     </button> 
   }
 
-  const dateString = [selectedDate.getFullYear(),selectedDate.getMonth() + 1,selectedDate.getDate()].join('-').toString()
+  const dateString = [selectedDate.getFullYear(),(selectedDate.getMonth() + 1).toString().padStart(2,'0'),(selectedDate.getDate()).toString().padStart(2,'0')].join('-').toString()
   const valueDate = parseDate(dateString)
 
   return <div className='flex justify-center gap-3 w-full items-center py-6'>
