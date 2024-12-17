@@ -13,7 +13,7 @@ export default function CompletedTask(props:{task:Task}) {
   function doTaskAction(actionName: string | Key) {
     switch (actionName) {
       case "setUncompleted":
-        dispatch(setCompleted({id, status: !task.isHighPriority }))
+        dispatch(setCompleted({id, status: !task.isCompleted }))
         break;
       case "deleteTask":
         dispatch(removeTask({id}))
