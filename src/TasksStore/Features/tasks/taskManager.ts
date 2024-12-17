@@ -66,18 +66,18 @@ export const TasksSlice = createSlice({
         }
       }
     },
-    addTask:  (state,action: PayloadAction<{title: string, desc: string, plannedDate?: Date}>) => {
-      const { title, desc, plannedDate = addDays(new Date(),1)} = action.payload
+    addTask:  (state,action: PayloadAction<{title: string, desc: string, isHighPriority?:boolean, plannedDate?: Date, time?: string, location?: string}>) => {
+      const { title, desc, plannedDate = addDays(new Date(),1), isHighPriority = false, time = null, location = null} = action.payload
       const id = createID()
       state.list[id] = {
         id,
         title: title || 'No Title Provided',
         desc,
-        isHighPriority:false,
+        isHighPriority,
         isCompleted: false,
         completedDate: null,
-        time: null,
-        location: null,
+        time,
+        location,
         plannedDate,
       };
       return state

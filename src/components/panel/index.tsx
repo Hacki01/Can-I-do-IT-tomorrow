@@ -3,7 +3,7 @@ import { addTask } from "@/TasksStore/Features/tasks/taskManager";
 import {Input, Textarea} from "@nextui-org/input";
 import {DatePicker} from "@nextui-org/date-picker";
 import type { CalendarDate } from "@internationalized/date"
-import {parseDate} from "@internationalized/date";
+import {getLocalTimeZone, parseDate, today} from "@internationalized/date";
 import {Button} from "@nextui-org/button";
 import React, {  useEffect, useState } from 'react';
 export default function Panel() {
@@ -52,7 +52,7 @@ export default function Panel() {
       <div className='flex justify-between'>
         <Button color="secondary" onPress={() => {handleAdd()}}>Add Tommorow</Button>
         <div className='flex gap-4'>
-          <DatePicker aria-label='Task Date' variant='faded' disableAnimation value={valueDate} onChange={onPickerChange}/>
+          <DatePicker minValue={today(getLocalTimeZone())} aria-label='Task Date' variant='faded' disableAnimation value={valueDate} onChange={onPickerChange}/>
           <Button color="warning" onPress={() => {handleAdd(addTaskDate)}}>Add</Button>
         </div>
       </div>
