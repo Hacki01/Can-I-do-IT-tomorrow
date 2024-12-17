@@ -10,6 +10,8 @@ export interface Task {
   isHighPriority: boolean,
   isCompleted: boolean,
   completedDate: Date | null;
+  time: string  | null;
+  location: string | null;
   plannedDate: Date,
 } 
 
@@ -29,7 +31,6 @@ const initialState: TasksSlice = {
 function createID() {
   const date = new Date()
   const dateTimestamp = Math.floor(date.getTime() + parseInt((Math.floor(Math.random() * 100)).toString().padStart(3,"0")));
- /*  const id = parseInt(year+month+day+(tasksForPlannedDate + 1).toString().padStart(3,'0')) */
   return dateTimestamp
 }
 
@@ -75,6 +76,8 @@ export const TasksSlice = createSlice({
         isHighPriority:false,
         isCompleted: false,
         completedDate: null,
+        time: null,
+        location: null,
         plannedDate,
       };
       return state
