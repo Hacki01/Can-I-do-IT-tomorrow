@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faEllipsis, faCircleExclamation, faTrash, faCircleRight } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faEllipsis, faCircleExclamation, faTrash, faCircleRight, faClock, faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import type { Task } from "@/TasksStore/Features/tasks/taskManager";
 import { removeTask, setCompleted, setHighPriority, updatePlannedDate } from "@/TasksStore/Features/tasks/taskManager"
 import { useDispatch } from 'react-redux'
@@ -38,7 +38,7 @@ export default function UncompletedTask(props:{task:Task}) {
     }
   }
 
-  return <div className={`mb-4 p-6 rounded-2xl bg-elementBg w-[95%] md:w-[80%] xl:w-[60%] flex items-center gap-4 border-2 ${task.isHighPriority ? 'border-danger ' : ' '}`}>
+  return <div className={`mb-4 px-6 py-2 min-h-20 rounded-2xl bg-elementBg w-[95%] md:w-[80%] xl:w-[60%] flex items-center gap-4 border-2 ${task.isHighPriority ? 'border-danger ' : ' '}`}>
     {/* Priority Mark */}
     {task.isHighPriority 
     ? <Tooltip content="High priority" color='danger'>
@@ -46,9 +46,15 @@ export default function UncompletedTask(props:{task:Task}) {
       </Tooltip>
     : null}
     <div className='flex justify-between w-full'>
-      <div className='flex flex-col'>
-        <div className='text-2xl'>{task.title}</div>
-        <div className='text-md'>{task.desc}</div>
+      <div className='flex flex-col gap-2'>
+        <div className='flex flex-col'>
+          <div className='text-2xl'>{task.title}</div>
+          <div className='text-md pl-1'>{task.desc}</div>
+        </div>
+        <div className='text-sm text-gray-500 flex gap-2 font-medium'>
+          {task.time ? <div className='flex gap-1 items-center'><FontAwesomeIcon icon={faClock} />{task.time}</div> : null}
+          {task.location ? <div className='flex gap-1 items-center'><FontAwesomeIcon icon={faLocationDot} />{task.location}</div> : null}
+        </div>
       </div> 
       <div className='flex items-center gap-2'>
         <Dropdown>

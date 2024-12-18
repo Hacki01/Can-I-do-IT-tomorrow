@@ -8,7 +8,7 @@ import {TimeInput} from "@nextui-org/date-input";
 import {Accordion, AccordionItem} from "@nextui-org/accordion";
 import type { CalendarDate } from "@internationalized/date"
 import {getLocalTimeZone, parseDate, today} from "@internationalized/date";
-import React, {  FormEvent, useEffect, useRef, useState } from 'react';
+import React, {  FormEvent, useEffect, useState } from 'react';
 export default function Panel() {
   const [plannedDate, setPlannedDate] = useState<Date>()
   const dispatch = useDispatch()
@@ -63,7 +63,7 @@ export default function Panel() {
         }} label="Description" name="desc" maxRows={3} variant='faded'/>
         {/* More options */}
         <Accordion>
-          <AccordionItem key="1" aria-label="More options" title="More options">
+          <AccordionItem key="1" aria-label="More options" title="Show more options">
             <div className="flex gap-2">
               <Input label="Location" name="location" variant='faded'/>
               <TimeInput hourCycle={24} label="Time" name="time"  variant='faded' className='w-min'/>
