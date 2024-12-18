@@ -26,7 +26,7 @@ export default function Panel() {
     const formData = Object.fromEntries(new FormData(e.currentTarget));
     const data = {...formData , plannedDate} as {
       title:string
-      desc:string
+      desc?:string
       plannedDate: Date
       location?: string
       time?: string
@@ -55,12 +55,12 @@ export default function Panel() {
           if (value.length > 100) {
             return "Title is too long";
           }
-        }} label="Title" name="title" isRequired placeholder="Enter task title" variant='faded'/>
+        }} label="Title" name="title" type='title' isRequired placeholder="Enter task title" variant='faded'/>
         <Textarea validate={(value) => {
           if (value.length > 300) {
             return "Description is too long";
           }
-        }} label="Description" name="desc" maxRows={3} variant='faded'/>
+        }} label="Description" name="desc" type='description' maxRows={3} variant='faded'/>
         {/* More options */}
         <Accordion>
           <AccordionItem key="1" aria-label="More options" title="Show more options">
@@ -69,7 +69,7 @@ export default function Panel() {
                   if (value.length > 50) {
                     return "Location is too long";
                   }
-                }} label="Location" name="location" variant='faded'/>
+                }} label="Location" name="location" type='location' variant='faded'/>
               <TimeInput hourCycle={24} label="Time" name="time"  variant='faded' className='w-min'/>
             </div>
           </AccordionItem>
