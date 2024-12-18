@@ -40,7 +40,6 @@ function addDays(date: Date, days: number) {
   return result;
 }
 
-
 export const TasksSlice = createSlice({
   name: "Tasks",
   initialState,
@@ -66,8 +65,8 @@ export const TasksSlice = createSlice({
         }
       }
     },
-    addTask:  (state,action: PayloadAction<{title: string, desc: string, isHighPriority?:boolean, plannedDate?: Date, time?: string, location?: string}>) => {
-      const { title, desc, plannedDate = addDays(new Date(),1), isHighPriority = false, time = null, location = null} = action.payload
+    addTask:  (state,action: PayloadAction<{title: string, desc?: string, isHighPriority?:boolean, plannedDate?: Date, time?: string, location?: string}>) => {
+      const { title, desc = "", plannedDate = addDays(new Date(),1), isHighPriority = false, time = null, location = null} = action.payload
       const id = createID()
       state.list[id] = {
         id,
