@@ -81,6 +81,16 @@ export const TasksSlice = createSlice({
       };
       return state
     },
+    editTask: (state,action: PayloadAction<{id:number, title: string, desc?: string, isHighPriority?:boolean, time?: string, location?: string}>) => {
+      const {id, title, desc = "", isHighPriority = false, time = null, location = null} = action.payload
+      if (!id ||!state.list[id]) return state
+      state.list[id].title = title
+      state.list[id].desc = desc
+      state.list[id].isHighPriority = isHighPriority
+      state.list[id].time = time
+      state.list[id].location = location
+      return state
+    },
     updatePlannedDate: (state,action: PayloadAction<{id:number, date:Date}>) => {
       const { id, date } = action.payload
       if (!id || !state.list[id]) return state
@@ -109,6 +119,6 @@ export const TasksSlice = createSlice({
   },
 })
 
-export const { addTask, moveExpiredTasks, removeTask, setCompleted, setTasks, setSelectedDate, setHighPriority, updatePlannedDate } = TasksSlice.actions;
+export const { addTask,editTask, moveExpiredTasks, removeTask, setCompleted, setTasks, setSelectedDate, setHighPriority, updatePlannedDate } = TasksSlice.actions;
 
 export default TasksSlice.reducer;
