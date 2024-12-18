@@ -65,7 +65,11 @@ export default function Panel() {
         <Accordion>
           <AccordionItem key="1" aria-label="More options" title="Show more options">
             <div className="flex gap-2">
-              <Input label="Location" name="location" variant='faded'/>
+              <Input validate={(value) => {
+                  if (value.length > 50) {
+                    return "Location is too long";
+                  }
+                }} label="Location" name="location" variant='faded'/>
               <TimeInput hourCycle={24} label="Time" name="time"  variant='faded' className='w-min'/>
             </div>
           </AccordionItem>

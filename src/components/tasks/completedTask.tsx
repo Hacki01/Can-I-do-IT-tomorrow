@@ -1,5 +1,5 @@
 import { removeTask, setCompleted, Task } from "@/TasksStore/Features/tasks/taskManager"
-import { faCheck, faCircleExclamation, faEllipsis, faReply, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { faCheck, faCircleExclamation, faClock, faEllipsis, faLocationDot, faReply, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Tooltip } from "@nextui-org/react"
 import { Key } from "react"
@@ -21,19 +21,25 @@ export default function CompletedTask(props:{task:Task}) {
     }
   }
 
-  return <div className="mb-4 p-6 rounded-2xl border-4 border-green-500 bg-elementBg w-[95%] md:w-[80%] xl:w-[60%] flex items-center gap-4 ">
+  return <div className="mb-4 px-6 py-2 min-h-20 rounded-2xl border-4 border-green-500 bg-elementBg w-[95%] md:w-[80%] xl:w-[60%] flex items-center gap-4 shadow-md shadow-green-400">
     {/* Completed mark */}
     <div className='text-3xl'><FontAwesomeIcon icon={faCheck} /></div>
     {/* Priority Mark */}
     {task.isHighPriority 
     ? <Tooltip content="High priority" color='danger'>
-        <FontAwesomeIcon className='text-4xl text-danger' icon={faCircleExclamation} />
+        <FontAwesomeIcon className='text-4xl' icon={faCircleExclamation} />
       </Tooltip>
     : null}
-    <div className='flex justify-between w-full'>
-      <div className='flex flex-col'>
-        <div className='text-2xl'>{task.title}</div>
-        <div className='text-md'>{task.desc}</div>
+    <div className='flex justify-between w-full items-center'>
+      <div className='flex flex-col gap-2'>
+        <div className='flex flex-col'>
+          <div className='text-2xl'>{task.title}</div>
+          <div className='text-md pl-1'>{task.desc}</div>
+        </div>
+        <div className='text-sm text-gray-500 flex gap-2 font-medium'>
+          {task.time ? <div className='flex gap-1 items-center'><FontAwesomeIcon icon={faClock} />{task.time}</div> : null}
+          {task.location ? <div className='flex gap-1 items-center'><FontAwesomeIcon icon={faLocationDot} />{task.location}</div> : null}
+        </div>
       </div> 
       <Dropdown>
             <Tooltip content="More options">

@@ -14,6 +14,7 @@ function addDays(date: Date, days: number) {
 }
 
 
+
 export default function UncompletedTask(props:{task:Task}) {
   const task = props.task
   const id = task.id
@@ -38,14 +39,14 @@ export default function UncompletedTask(props:{task:Task}) {
     }
   }
 
-  return <div className={`mb-4 px-6 py-2 min-h-20 rounded-2xl bg-elementBg w-[95%] md:w-[80%] xl:w-[60%] flex items-center gap-4 border-2 ${task.isHighPriority ? 'border-danger ' : ' '}`}>
+  return <div className={`mb-4 px-6 py-2 min-h-20 rounded-2xl bg-elementBg w-[95%] md:w-[80%] xl:w-[60%] flex items-center gap-4 border-2  ${task.isHighPriority ? 'border-danger ' : ' '}`}>
     {/* Priority Mark */}
     {task.isHighPriority 
     ? <Tooltip content="High priority" color='danger'>
         <FontAwesomeIcon className='text-4xl text-danger' icon={faCircleExclamation} />
       </Tooltip>
     : null}
-    <div className='flex justify-between w-full'>
+    <div className='flex justify-between items-center w-full'>
       <div className='flex flex-col gap-2'>
         <div className='flex flex-col'>
           <div className='text-2xl'>{task.title}</div>
