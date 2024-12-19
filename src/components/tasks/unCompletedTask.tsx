@@ -64,11 +64,11 @@ function PlannedDateModal(props:{isOpen: boolean,onOpenChange: (isOpen:boolean) 
     onOpenChange(false)
   }
 
-  return <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+  return <Modal size="xs" isOpen={isOpen} onOpenChange={onOpenChange}>
     <ModalContent>
       {(onClose) => (
         <Form onSubmit={onSubmit} validationBehavior="native">
-          <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+          <ModalHeader className="flex flex-col gap-1">Set new task date</ModalHeader>
           <ModalBody>
             <DatePicker isRequired defaultValue={valueDate} minValue={today(getLocalTimeZone())} aria-label='Task Date' name="date" variant='faded' disableAnimation/>
           </ModalBody>

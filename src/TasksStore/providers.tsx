@@ -14,6 +14,8 @@ function addDays(date: Date, days: number) {
   return result;
 }
 
+let endOfDay = addDays(new Date(),1)
+endOfDay.setHours(0,0,0,0)
 const addTestTasks = false
 
 function dateTimeReviver(key: string, value:string) {
@@ -46,9 +48,13 @@ function LocalStorageLoadProvider ({children}: Readonly<{
         dispatch(moveExpiredTasks())
       }
     }
-    /* setInterval(() => {
-      dispatch(moveExpiredTasks())
-    },1000) */
+    setInterval(() => {
+      if (new Date() > endOfDay) {
+        dispatch(moveExpiredTasks())
+        endOfDay = addDays(new Date(),1)
+        endOfDay.setHours(0,0,0,0)  
+      }
+    },1000)
   }, [dispatch]);
   return children
 }
