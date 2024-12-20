@@ -89,7 +89,7 @@ function PanelContent(props: {close?: () => void}) {
       </div>
       <div className='flex justify-between w-full flex-wrap gap-2'>
         <div className='flex gap-2'>
-          <Button className="max-lg:hidden" color="secondary" onPress={() => {setPlannedDate(new Date(new Date().getTime() + 24*60*60*1000))}}>Tommorow</Button>
+          <Button className="max-md:hidden" color="secondary" onPress={() => {setPlannedDate(new Date(new Date().getTime() + 24*60*60*1000))}}>Tommorow</Button>
           <DatePicker minValue={today(getLocalTimeZone())} aria-label='Task Date' variant='faded' disableAnimation value={valueDate} onChange={onPickerChange}/>
         </div>
           <Button type='submit' color="warning">Add</Button>
