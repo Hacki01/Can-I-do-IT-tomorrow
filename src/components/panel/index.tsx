@@ -103,7 +103,7 @@ function ModalPanel() {
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+            <ModalHeader className="flex flex-col gap-1">Add new task</ModalHeader>
             <ModalBody>
               <PanelContent/>
             </ModalBody>
