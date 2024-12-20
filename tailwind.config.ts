@@ -1,17 +1,22 @@
 import type { Config } from "tailwindcss";
-
+import fluid, { extract, screens, fontSize } from 'fluid-tailwind'
 import { nextui } from "@nextui-org/theme";
 
 const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@nextui-org/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
-  ],
+  content: {
+    files: [
+      "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+      "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+      "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+      "./node_modules/@nextui-org/**/*.{js,ts,jsx,tsx}",
+      "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
+    ],
+    extract
+  },
   theme: {
     extend: {
+      screens, // Tailwind's default screens, in `rem`
+      fontSize, // Tailwind's default font sizes, in `rem` (including line heights)
       colors: {
         bg: "var(--background)",
         elementBg: "var(--elementBg)",
@@ -20,7 +25,7 @@ const config: Config = {
     },
   },
   darkMode: "class",
-  plugins: [nextui({
+  plugins: [fluid,nextui({
     addCommonColors: true,
     themes: {
       light: {

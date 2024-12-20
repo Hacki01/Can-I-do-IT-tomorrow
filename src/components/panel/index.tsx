@@ -1,15 +1,26 @@
 import { useDispatch } from 'react-redux'
 import { addTask } from "@/TasksStore/Features/tasks/taskManager";
-import {Input, Textarea} from "@nextui-org/input";
-import {DatePicker} from "@nextui-org/date-picker";
-import {Button} from "@nextui-org/button";
-import {Form} from "@nextui-org/form";
-import {TimeInput} from "@nextui-org/date-input";
 import {Accordion, AccordionItem} from "@nextui-org/accordion";
 import type { CalendarDate } from "@internationalized/date"
 import {getLocalTimeZone, parseDate, today} from "@internationalized/date";
 import React, {  FormEvent, useEffect, useState } from 'react';
-export default function Panel() {
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Form,
+  TimeInput,
+  Input,
+  Textarea,
+  useDisclosure,
+  DatePicker,
+} from "@nextui-org/react";
+
+
+function PanelContent() {
   const [plannedDate, setPlannedDate] = useState<Date>()
   const dispatch = useDispatch()
 
@@ -45,8 +56,7 @@ export default function Panel() {
     setPlannedDate(date)
   }
 
-  return <div className="w-[30%] h-full flex justify-center">
-    <Form validationBehavior="native" className="w-[90%] p-4 rounded-3xl bg-elementBg flex flex-col gap-4" onSubmit={onSubmit}>
+  return <Form validationBehavior="native" className="w-[90%] p-4 rounded-3xl bg-elementBg flex flex-col gap-4" onSubmit={onSubmit}>
       <div className='flex flex-col gap-2 w-full'>
         <Input validate={(value) => {
           if (value.length < 3) {
@@ -64,7 +74,7 @@ export default function Panel() {
         {/* More options */}
         <Accordion>
           <AccordionItem key="1" aria-label="More options" title="Show more options">
-            <div className="flex gap-2">
+            <div className="flex gap-2 max-lg:flex-wrap">
               <Input validate={(value) => {
                   if (value.length > 50) {
                     return "Location is too long";
@@ -75,13 +85,47 @@ export default function Panel() {
           </AccordionItem>
         </Accordion>
       </div>
-      <div className='flex justify-between w-full'>
-        <div className='flex gap-4'>
-        <Button color="secondary" onPress={() => {setPlannedDate(new Date(new Date().getTime() + 24*60*60*1000))}}>Tommorow</Button>
-        <DatePicker minValue={today(getLocalTimeZone())} aria-label='Task Date' variant='faded' disableAnimation value={valueDate} onChange={onPickerChange}/>
+      <div className='flex justify-between w-full flex-wrap gap-2'>
+        <div className='flex gap-2'>
+          <Button className="max-lg:hidden" color="secondary" onPress={() => {setPlannedDate(new Date(new Date().getTime() + 24*60*60*1000))}}>Tommorow</Button>
+          <DatePicker minValue={today(getLocalTimeZone())} aria-label='Task Date' variant='faded' disableAnimation value={valueDate} onChange={onPickerChange}/>
         </div>
           <Button type='submit' color="warning">Add</Button>
       </div>
     </Form>
+}
+
+function ModalPanel() {
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  return <>
+    <Button color='warning' onPress={onOpen}>Add new task</Button>
+    <Modal placement='center' isOpen={isOpen} onOpenChange={onOpenChange}>
+      <ModalContent>
+        {(onClose) => (
+          <>
+            <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+            <ModalBody>
+              <PanelContent/>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" variant="light" onPress={onClose}>
+                Cancel
+              </Button>
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
+  </>
+}
+
+export default function Panel() {
+  return <div className='md:w-[40%]'>
+    <div className='hidden md:flex h-full justify-center'>
+      <PanelContent/>
+    </div>
+    <div className='md:hidden flex justify-center mb-4'>
+      <ModalPanel/>
+    </div>
   </div>
 }

@@ -21,7 +21,7 @@ export default function CompletedTask(props:{task:Task}) {
     }
   }
 
-  return <div className="mb-4 px-6 py-2 min-h-20 rounded-2xl border-4 border-green-500 bg-elementBg w-[95%] md:w-[80%] xl:w-[60%] flex items-center gap-4 shadow-md shadow-green-400">
+  return <div className="mb-4 px-6 py-2 min-h-20 rounded-2xl border-4 border-green-500 bg-elementBg flex items-center gap-4 shadow-md shadow-green-400">
     {/* Completed mark */}
     <div className='text-3xl'><FontAwesomeIcon icon={faCheck} /></div>
     {/* Priority Mark */}

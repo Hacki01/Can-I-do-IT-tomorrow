@@ -117,7 +117,7 @@ function EditTask(props: {
   return (
     <Form
       onSubmit={onSubmit}
-      className="mb-4 px-6 py-2 min-h-30 rounded-2xl bg-elementBg w-[95%] md:w-[80%] xl:w-[60%] border-2 border-warning"
+      className="mb-4 px-6 py-2 min-h-30 rounded-2xl bg-elementBg border-2 border-warning"
     >
       <div className="flex items-center gap-4 w-full">
         <div className="flex justify-between items-center w-full">
@@ -243,7 +243,7 @@ export default function UncompletedTask(props: { task: Task }) {
 
   return (
     <div
-      className={`mb-4 px-6 py-2 min-h-20 rounded-2xl bg-elementBg w-[95%] md:w-[80%] xl:w-[60%] flex items-center gap-4 border-2  ${
+      className={`mb-4 px-6 py-2 min-h-20 rounded-2xl bg-elementBg flex items-center gap-4 w-[95%] md:w-[85%] lg:w-[70%] border-2  ${
         task.isHighPriority ? "border-danger " : " "
       }`}
     >

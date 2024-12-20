@@ -22,7 +22,7 @@ export default function TasksList() {
   const completedTasks = list.filter(task => task.isCompleted);
 
   return (
-    <FadeIn childClassName="w-full flex justify-center" className="flex flex-col w-[70%] items-center">
+    <FadeIn childClassName="w-full flex justify-center" className="flex flex-col w-full items-center">
       {uncompletedTasks.length === 0 ? 
         <div className="flex flex-col gap-2 py-20">
           <div className="text-6xl text-textGray hover:text-green-300 transition-all duration-500 font">
