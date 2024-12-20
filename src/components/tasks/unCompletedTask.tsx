@@ -98,6 +98,7 @@ function EditTask(props: {
   ];
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    console.log(e.currentTarget);
     const formData = Object.fromEntries(new FormData(e.currentTarget));
     const isHighPriority = formData.isHighPriority === undefined ? false : true;
     const data = { ...formData, id: task.id, isHighPriority } as {
@@ -116,6 +117,7 @@ function EditTask(props: {
   //render edit form
   return (
     <Form
+      validationBehavior="native"
       onSubmit={onSubmit}
       className="mb-4 px-6 py-2 min-h-30 rounded-2xl bg-elementBg border-2 w-[95%] md:w-[85%] lg:w-[70%] border-warning"
     >
@@ -189,15 +191,6 @@ function EditTask(props: {
           <div className="flex flex-col gap-2">
             <Button type="submit" color="success">
               Save
-            </Button>
-            <Button
-              variant="ghost"
-              color="danger"
-              onPress={() => {
-                doTaskAction("editTask");
-              }}
-            >
-              Cancel
             </Button>
           </div>
         </div>
@@ -300,6 +293,7 @@ export default function UncompletedTask(props: { task: Task }) {
               aria-label="Static Actions"
             >
               <DropdownItem
+                textValue="Set as high priority"
                 key="changePriority"
                 startContent={<FontAwesomeIcon icon={faCircleExclamation} />}
                 className="text-warning"
@@ -308,18 +302,21 @@ export default function UncompletedTask(props: { task: Task }) {
                 {task.isHighPriority ? "Normal Priority" : "High Priority"}
               </DropdownItem>
               <DropdownItem
+                textValue="Edit task"
                 key="editTask"
                 startContent={<FontAwesomeIcon icon={faPencil} />}
               >
                 Edit task
               </DropdownItem>
               <DropdownItem
+                textValue="Move to next day"
                 key="updatePlannedDate"
                 startContent={<FontAwesomeIcon icon={faCircleRight} />}
               >
                 Move to the next day
               </DropdownItem>
               <DropdownItem
+                textValue="Move to other day"
                 key="moveTask"
                 startContent={<FontAwesomeIcon icon={faCalendarDay} />}
               >
@@ -327,6 +324,7 @@ export default function UncompletedTask(props: { task: Task }) {
               </DropdownItem>
               <DropdownSection title=" ">
                 <DropdownItem
+                  textValue="Delete task"
                   key="deleteTask"
                   startContent={<FontAwesomeIcon icon={faTrash} />}
                   className="text-danger"

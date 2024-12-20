@@ -50,9 +50,8 @@ export default function CompletedTask(props:{task:Task}) {
               </div>
             </Tooltip>
           <DropdownMenu onAction={(key) => doTaskAction(key)} aria-label="Static Actions">
-            <DropdownItem key="setUncompleted" startContent={<FontAwesomeIcon icon={faReply}/>}>Set as Uncompleted</DropdownItem>
-            {/* <DropdownItem key="editTask" startContent={"!"}>Edit task</DropdownItem> */}
-            <DropdownItem key="deleteTask" startContent={<FontAwesomeIcon icon={faTrash}/>} className="text-danger" color="danger">
+            <DropdownItem textValue="setUncompleted" key="setUncompleted" startContent={<FontAwesomeIcon icon={faReply}/>}>Set as Uncompleted</DropdownItem>
+            <DropdownItem textValue="deleteTask" key="deleteTask" startContent={<FontAwesomeIcon icon={faTrash}/>} className="text-danger" color="danger">
               Delete task
             </DropdownItem>
           </DropdownMenu>
