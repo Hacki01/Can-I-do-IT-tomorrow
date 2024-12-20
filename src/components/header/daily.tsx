@@ -69,10 +69,8 @@ export default function Daily() {
   const uncompletedTasksCount = Object.values(tasks).filter((task) => {
     const taskDate = new Date(task.plannedDate);
     taskDate.setHours(0, 0, 0, 0);
-    console.log(taskDate)
     return !task.isCompleted && taskDate.getTime() === tomorrow.getTime();
   }).length;
-  console.log(uncompletedTasksCount)
   const dateString = [selectedDate.getFullYear(),(selectedDate.getMonth() + 1).toString().padStart(2,'0'),(selectedDate.getDate()).toString().padStart(2,'0')].join('-').toString()
   const valueDate = parseDate(dateString)
 
