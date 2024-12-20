@@ -20,7 +20,8 @@ import {
 } from "@nextui-org/react";
 
 
-function PanelContent() {
+function PanelContent(props: {close?: () => void}) {
+  const { close } = props
   const [plannedDate, setPlannedDate] = useState<Date>()
   const dispatch = useDispatch()
 
@@ -47,6 +48,7 @@ function PanelContent() {
     dispatch(addTask(data))
     e.preventDefault()
     e.currentTarget.reset()
+    if (close) close()
   }
 
 
@@ -97,6 +99,9 @@ function PanelContent() {
 
 function ModalPanel() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  function close() {
+    onOpenChange()
+  }
   return <>
     <Button color='warning' onPress={onOpen}>Add new task</Button>
     <Modal placement='center' isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -105,7 +110,7 @@ function ModalPanel() {
           <>
             <ModalHeader className="flex flex-col gap-1">Add new task</ModalHeader>
             <ModalBody>
-              <PanelContent/>
+              <PanelContent close={close}/>
             </ModalBody>
             <ModalFooter>
               <Button color="danger" variant="light" onPress={onClose}>
