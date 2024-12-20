@@ -21,22 +21,24 @@ export default function CompletedTask(props:{task:Task}) {
     }
   }
 
-  return <div className="mb-4 px-6 py-2 min-h-20 rounded-2xl border-4 border-green-500 bg-elementBg flex items-center gap-4 w-[95%] md:w-[85%] lg:w-[70%] shadow-md shadow-green-400">
-    {/* Completed mark */}
-    <div className='text-3xl'><FontAwesomeIcon icon={faCheck} /></div>
-    {/* Priority Mark */}
-    {task.isHighPriority 
-    ? <Tooltip content="High priority" color='danger'>
-        <FontAwesomeIcon className='text-4xl' icon={faCircleExclamation} />
-      </Tooltip>
-    : null}
+  return <div className="break-all mb-4 ~px-3/6 py-2 min-h-20 rounded-2xl border-4 border-green-500 bg-elementBg flex items-center ~gap-2/4 w-[95%] lg:w-[70%] shadow-md shadow-green-400">
+    <div className="flex flex-col gap-3">
+      {/* Completed mark */}
+      <div className='~text-2xl/4xl text-success'><FontAwesomeIcon icon={faCheck} /></div>
+      {/* Priority Mark */}
+      {task.isHighPriority 
+      ? <Tooltip content="High priority" color='danger'>
+          <FontAwesomeIcon className='~text-2xl/4xl text-danger' icon={faCircleExclamation} />
+        </Tooltip>
+      : null}
+    </div>
     <div className='flex justify-between w-full items-center'>
       <div className='flex flex-col gap-2'>
         <div className='flex flex-col'>
-          <div className='text-2xl'>{task.title}</div>
-          <div className='text-md pl-1'>{task.desc}</div>
+          <div className='~text-xl/2xl'>{task.title}</div>
+          <div className='~text-sm/md-1'>{task.desc}</div>
         </div>
-        <div className='text-sm text-gray-500 flex gap-2 font-medium'>
+        <div className='~text-xs/sm text-gray-500 flex gap-2 font-medium'>
           {task.time ? <div className='flex gap-1 items-center'><FontAwesomeIcon icon={faClock} />{task.time}</div> : null}
           {task.location ? <div className='flex gap-1 items-center'><FontAwesomeIcon icon={faLocationDot} />{task.location}</div> : null}
         </div>

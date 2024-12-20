@@ -125,7 +125,7 @@ function ModalPanel() {
 }
 
 export default function Panel() {
-  return <div className='md:w-[40%]'>
+  return <div className='w-full lg:w-[50%] xl:w-[40%]'>
     <div className='hidden md:flex h-full justify-center'>
       <PanelContent/>
     </div>

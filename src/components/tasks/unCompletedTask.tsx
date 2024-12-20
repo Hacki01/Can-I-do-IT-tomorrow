@@ -98,7 +98,6 @@ function EditTask(props: {
   ];
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(e.currentTarget);
     const formData = Object.fromEntries(new FormData(e.currentTarget));
     const isHighPriority = formData.isHighPriority === undefined ? false : true;
     const data = { ...formData, id: task.id, isHighPriority } as {
@@ -119,7 +118,7 @@ function EditTask(props: {
     <Form
       validationBehavior="native"
       onSubmit={onSubmit}
-      className="mb-4 px-6 py-2 min-h-30 rounded-2xl bg-elementBg border-2 w-[95%] md:w-[85%] lg:w-[70%] border-warning"
+      className="mb-4 px-6 py-2 min-h-30 rounded-2xl bg-elementBg border-2 w-[95%] lg:w-[70%] border-warning"
     >
       <div className="flex items-center gap-4 w-full">
         <div className="flex justify-between items-center w-full">
@@ -236,7 +235,7 @@ export default function UncompletedTask(props: { task: Task }) {
 
   return (
     <div
-      className={`mb-4 px-6 py-2 min-h-20 rounded-2xl bg-elementBg flex items-center gap-4 w-[95%] md:w-[85%] lg:w-[70%] border-2  ${
+      className={`break-all mb-4 ~px-3/6 py-2 min-h-20 rounded-2xl bg-elementBg flex items-center ~gap-2/4 w-[95%] lg:w-[70%] border-2  ${
         task.isHighPriority ? "border-danger " : " "
       }`}
     >
@@ -246,7 +245,7 @@ export default function UncompletedTask(props: { task: Task }) {
       {task.isHighPriority ? (
         <Tooltip content="High priority" color="danger">
           <FontAwesomeIcon
-            className="text-4xl text-danger"
+            className="~text-2xl/4xl text-danger"
             icon={faCircleExclamation}
           />
         </Tooltip>
@@ -254,10 +253,10 @@ export default function UncompletedTask(props: { task: Task }) {
       <div className="flex justify-between items-center w-full">
         <div className="flex flex-col gap-2">
           <div className="flex flex-col">
-            <div className="text-2xl">{task.title}</div>
-            <div className="text-md pl-1">{task.desc}</div>
+            <div className="~text-xl/2xl">{task.title}</div>
+            <div className="~text-sm/md pl-1">{task.desc}</div>
           </div>
-          <div className="text-sm text-gray-500 flex gap-2 font-medium">
+          <div className="~text-xs/sm text-gray-500 flex gap-2 font-medium">
             {task.time ? (
               <div className="flex gap-1 items-center">
                 <FontAwesomeIcon icon={faClock} />
