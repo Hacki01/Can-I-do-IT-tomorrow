@@ -64,7 +64,7 @@ function PlannedDateModal(props:{isOpen: boolean,onOpenChange: (isOpen:boolean) 
     onOpenChange(false)
   }
 
-  return <Modal size="xs" isOpen={isOpen} onOpenChange={onOpenChange}>
+  return <Modal size="xs" isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
     <ModalContent>
       {(onClose) => (
         <Form onSubmit={onSubmit} validationBehavior="native">
@@ -117,7 +117,7 @@ function EditTask(props: {
   return (
     <Form
       onSubmit={onSubmit}
-      className="mb-4 px-6 py-2 min-h-30 rounded-2xl bg-elementBg border-2 border-warning"
+      className="mb-4 px-6 py-2 min-h-30 rounded-2xl bg-elementBg border-2 w-[95%] md:w-[85%] lg:w-[70%] border-warning"
     >
       <div className="flex items-center gap-4 w-full">
         <div className="flex justify-between items-center w-full">
