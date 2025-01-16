@@ -5,7 +5,7 @@ import TaskTile from "./taskTile";
 import { useState } from "react";
 
 function DateToString(date: Date) {
-  return [date.getDate(),date.getMonth()+1].join('.');
+  return [date.getDate(),(date.getMonth()+1).toString().padStart(2,"0")].join('.');
 }
 
 export default function TasksList() {
